@@ -1,0 +1,23 @@
+{
+  "version": "0.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "loopback": "1.4.x",
+    "strong-cluster-control": "~0.1.0",
+    "strong-agent": "~0.2.15",
+    "loopback-explorer": "~1.0.0"
+  },
+  "optionalDependencies": {
+    "strong-cluster-control": "~0.1.0",
+    "strong-agent": "~0.2.15",
+    "loopback-explorer": "~1.0.0"
+  },
+  "name": "icarapi",
+  "description": "ERROR: No README data found!",
+  "devDependencies": {},
+  "author": "sean brookes",
+  "license": "MIT"
+}
