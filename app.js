@@ -8,24 +8,24 @@ try {
   require('strong-agent').profile();
   var control = require('strong-cluster-control');
   var clusterOptions = control.loadOptions();
-} catch(e) {
+} catch (e) {
   console.log('Could not load operational dependencies:');
   console.log(e);
 }
 
 // if configured as a cluster master, just start controller
-if(clusterOptions.clustered && clusterOptions.isMaster) {
+if (clusterOptions.clustered && clusterOptions.isMaster) {
   return control.start(clusterOptions);
 }
+
 
 /*
  * 1. Configure LoopBack models and datasources
  *
  * Read more at http://apidocs.strongloop.com/loopback#appbootoptions
  */
-
 app.boot(__dirname);
-
+//app.dataSources.oracleDB.automigrate('user', console.log);
 /*
  * 2. Configure request preprocessing
  *
@@ -53,6 +53,7 @@ app.use(loopback.methodOverride());
 // LoopBack REST interface
 var apiPath = '/api';
 app.use(apiPath, loopback.rest());
+app.use(loopback.token({model: app.models.accessToken}));
 
 // API explorer (if present)
 var explorerPath = '/explorer';
@@ -61,7 +62,7 @@ try {
   var explorer = require('loopback-explorer');
   app.use(explorerPath, explorer(app, { basePath: apiPath }));
   explorerConfigured = true;
-} catch(e){
+} catch (e) {
   // ignore errors, explorer stays disabled
 }
 
@@ -87,7 +88,7 @@ app.use(app.router);
 // The static file server should come after all other routes
 // Every request that goes through the static middleware hits
 // the file system to check if a file exists.
-app.use(loopback.static(path.join(__dirname, 'public')));
+app.use(loopback.static(path.join(__dirname, '../client/www')));
 
 // Requests that get this far won't be handled
 // by any middleware. Convert them into a 404 error
@@ -118,7 +119,7 @@ app.use(loopback.errorHandler());
  * (remove this to handle `/` on your own)
  */
 
-app.get('/', loopback.status());
+//app.get('/', loopback.status());
 
 /*
  * 6. Enable access control and token based authentication.
@@ -135,9 +136,9 @@ app.enableAuth();
  * (only if this module is the main module)
  */
 
-if(require.main === module) {
+if (require.main === module) {
   require('http').createServer(app).listen(app.get('port'), app.get('host'),
-    function(){
+    function () {
       var baseUrl = 'http://' + app.get('host') + ':' + app.get('port');
       if (explorerConfigured) {
         console.log('Browse your REST API at %s%s', baseUrl, explorerPath);

@@ -1,4 +1,12 @@
 {
+  "oracleDB": {
+    "connector": "loopback-connector-oracle",
+    "database": "XE",
+    "host": "demo.strongloop.com",
+    "port": 1521,
+    "username": "bacn",
+    "password": "L00pBack"
+  },
   "db": {
     "defaultForType": "db",
     "connector": "memory"
