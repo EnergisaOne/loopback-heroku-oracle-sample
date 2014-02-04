@@ -6,6 +6,7 @@ var started = new Date();
 // operational dependencies
 try {
   require('strong-agent').profile();
+
   var control = require('strong-cluster-control');
   var clusterOptions = control.loadOptions();
 } catch (e) {
